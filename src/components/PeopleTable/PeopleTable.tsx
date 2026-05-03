@@ -43,6 +43,8 @@ export const PeopleTable = ({ persons }: Props) => {
 
   /* eslint-disable */
 
+  /* eslint-disable */
+
   const SortableHeader = ({
     label,
     columnKey,
@@ -50,12 +52,9 @@ export const PeopleTable = ({ persons }: Props) => {
     label: string;
     columnKey: string;
   }) => (
-    <th
-      onClick={() => handleSort(columnKey)}
-      style={{ cursor: 'pointer' }}
-    >
+    <th onClick={() => handleSort(columnKey)} style={{ cursor: 'pointer' }}>
       <span className="is-flex is-flex-wrap-nowrap">
-        {label} {}
+        {label}
         <span className="icon">
           <i className={getSortIcon(columnKey)} />
         </span>
