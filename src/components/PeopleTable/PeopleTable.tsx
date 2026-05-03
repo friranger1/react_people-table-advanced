@@ -12,6 +12,17 @@ type Props = {
 export const PeopleTable = ({ persons }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  function getSortIcon(columnKey: string) {
+    const isCurrent = searchParams.get('sort') === columnKey;
+    const order = searchParams.get('order');
+
+    return cn('fas', {
+      'fa-sort': !isCurrent,
+      'fa-sort-up': isCurrent && order === 'asc',
+      'fa-sort-down': isCurrent && order === 'desc',
+    });
+  }
+
   function handleSort(columnKey: string) {
     const params = new URLSearchParams(searchParams);
     const currentSort = params.get('sort');
@@ -30,22 +41,23 @@ export const PeopleTable = ({ persons }: Props) => {
     setSearchParams(params);
   }
 
-  const SortableHeader = ({}: { label: string; columnKey: string }) => (
-    <th onClick={() => handleSort('name')} style={{ cursor: 'pointer' }}>
+  /* eslint-disable */
+
+  const SortableHeader = ({
+    label,
+    columnKey,
+  }: {
+    label: string;
+    columnKey: string;
+  }) => (
+    <th
+      onClick={() => handleSort(columnKey)}
+      style={{ cursor: 'pointer' }}
+    >
       <span className="is-flex is-flex-wrap-nowrap">
-        Name
+        {label} {}
         <span className="icon">
-          <i
-            className={cn('fas', {
-              'fa-sort': searchParams.get('sort') !== 'name',
-              'fa-sort-up':
-                searchParams.get('sort') === 'name' &&
-                searchParams.get('order') === 'asc',
-              'fa-sort-down':
-                searchParams.get('sort') === 'name' &&
-                searchParams.get('order') === 'desc',
-            })}
-          />
+          <i className={getSortIcon(columnKey)} />
         </span>
       </span>
     </th>
