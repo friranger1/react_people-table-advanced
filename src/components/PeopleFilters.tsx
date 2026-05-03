@@ -15,9 +15,15 @@ export const PeopleFilters = () => {
   }
 
   function handleSearchParams(event: ChangeEvent<HTMLInputElement>) {
+    const { value } = event.target;
     const params = new URLSearchParams(searchParams);
 
-    params.set('query', event.target.value);
+    if (value.trim()) {
+      params.set('query', value);
+    } else {
+      params.delete('query');
+    }
+
     setSearchParams(params);
   }
 
